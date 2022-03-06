@@ -28,6 +28,6 @@
 /tmp/storage/*
 !/tmp/storage/
 !/tmp/storage/.keep
-
+.envrc
 # Ignore master key for decrypting credentials and more.
 /config/master.key
