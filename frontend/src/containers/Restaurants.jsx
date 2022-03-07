@@ -1,8 +1,8 @@
 import React, { Fragment, useReducer, useEffect } from 'react';
+import { Link } from "react-router-dom";
+import styled from 'styled-components';
 // apis
 import {fetchRestaurants } from '../apis/restaurants';
-import styled from 'styled-components';
-import { Link } from "react-router-dom";
 // reducers
 import {
   initialState,
@@ -106,6 +106,7 @@ export const Restaurants = () => {
             )
         }
       </RestaurantsContentsList>
+
       {
         state.restaurantsList.map(restaurant =>
           <div>
