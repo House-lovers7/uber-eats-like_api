@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useReducer } from 'react';
+import React, { Fragment, useReducer, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 // apis
@@ -7,6 +7,7 @@ import { fetchFoods } from '../apis/foods';
 import { REQUEST_STATE } from '../constants';
 import { LocalMallIcon } from '../components/Icons';
 import { FoodWrapper } from '../components/FoodWrapper';
+import { FoodOrderDialog } from '../components/FoodOrderDialog';
 import Skeleton from '@material-ui/lab/Skeleton';
 
 // reducers
@@ -55,6 +56,13 @@ export const Foods = ({
 }) => {
   const [foodsState, dispatch] = useReducer(foodsReducer, foodsInitialState);
 
+  const initialState = {
+    isOpenOrderDialog: false,
+    selectedFood: null,
+    selectedFoodCount: 1,
+}
+const [state, setState] = useState(initialState);
+
   useEffect(() => {
     dispatch({ type: foodsActionTyps.FETCHING });
     fetchFoods(match.params.restaurantsId)
@@ -96,14 +104,31 @@ export const Foods = ({
             foodsState.foodsList.map(food =>
               <ItemWrapper key={food.id}>
                 <FoodWrapper
-                  food={food}
-                  onClickFoodWrapper={(food) => console.log(food)}
-                  imageUrl={FoodImage}
-                />
+                food={food}
+                onClickFoodWrapper={
+                  (food) => setState({
+                    ...state,
+                    isOpenOrderDialog: true,
+                    selectedFood: food,
+                  })
+                }
+                imageUrl={FoodImage}
+              />
               </ItemWrapper>
             )
         }
       </FoodsList>
+      {
+        state.isOpenOrderDialog &&
+          <FoodOrderDialog
+            food={state.selectedFood}
+            isOpen={state.isOpenOrderDialog}
+            onClose={() => setState({
+              ...state,
+              isOpenOrderDialog: false,
+            })}
+          />
+      }
     </Fragment>
   )
 }
