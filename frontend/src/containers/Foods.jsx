@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from 'styled-components';
 // apis
 import { fetchFoods } from '../apis/foods';
+
 // constants
 import { REQUEST_STATE } from '../constants';
 import { LocalMallIcon } from '../components/Icons';
@@ -50,6 +51,10 @@ const ItemWrapper = styled.div`
   margin: 16px;
 `;
 
+const submitOrder = () => {
+  // 後ほど仮注文のAPIを実装します
+  console.log('登録ボタンが押された！')
+}
 
 export const Foods = ({
   match
@@ -120,14 +125,28 @@ const [state, setState] = useState(initialState);
       </FoodsList>
       {
         state.isOpenOrderDialog &&
-          <FoodOrderDialog
-            food={state.selectedFood}
-            isOpen={state.isOpenOrderDialog}
-            onClose={() => setState({
-              ...state,
-              isOpenOrderDialog: false,
-            })}
-          />
+        <FoodOrderDialog
+        isOpen={state.isOpenOrderDialog}
+        food={state.selectedFood}
+        countNumber={state.selectedFoodCount}
+        onClickCountUp={() => setState({
+          ...state,
+          selectedFoodCount: state.selectedFoodCount + 1,
+        })}
+        onClickCountDown={() => setState({
+          ...state,
+          selectedFoodCount: state.selectedFoodCount - 1,
+        })}
+        // 先ほど作った関数を渡します
+        onClickOrder={() => submitOrder()}
+        // モーダルを閉じる時はすべてのstateを初期化する
+        onClose={() => setState({
+          ...state,
+          isOpenOrderDialog: false,
+          selectedFood: null,
+          selectedFoodCount: 1,
+        })}
+      />
       }
     </Fragment>
   )
