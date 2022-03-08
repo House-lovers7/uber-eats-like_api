@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2022_02_07_140342) do
   end
 
   create_table "orders", force: :cascade do |t|
+    t.integer "total_price", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

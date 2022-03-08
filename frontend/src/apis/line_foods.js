@@ -13,6 +13,7 @@ export const postLineFoods =(params) => {
   })
   .catch((e) => { throw e; })
 };
+
 export const replaceLineFoods = (params) => {
   return axios.put(lineFoodsReplace,
     {
@@ -20,6 +21,14 @@ export const replaceLineFoods = (params) => {
       count: params.count,
     }
   )
+  .then(res => {
+    return res.data
+  })
+  .catch((e) => { throw e; })
+};
+
+export const fetchLineFoods = () => {
+  return axios.get(lineFoods)
   .then(res => {
     return res.data
   })

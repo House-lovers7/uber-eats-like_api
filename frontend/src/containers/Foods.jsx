@@ -18,7 +18,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 // reducers
 import {
   initialState as foodsInitialState,
-  foodsActionTyps,
+  foodsActionTypes,
   foodsReducer,
 } from '../reducers/foods';
 
@@ -66,8 +66,8 @@ export const Foods = ({
     selectedFood: null,
     selectedFoodCount: 1,
     isOpenNewOrderDialog: false,
-    existingResutaurautName: '',
-    newResutaurautName: '',
+    existingRestaurantName: '',
+    newRestaurantName: '',
   };
 
 const [state, setState] = useState(initialState);
@@ -83,8 +83,8 @@ const submitOrder = () => {
           ...state,
           isOpenOrderDialog: false,
           isOpenNewOrderDialog: true,
-          existingResutaurautName: e.response.data.existing_restaurant,
-          newResutaurautName: e.response.data.new_restaurant,
+          existingRestaurantName: e.response.data.existing_restaurant,
+          newRestaurantName: e.response.data.new_restaurant,
         })
       } else {
         throw e;
@@ -100,11 +100,11 @@ const replaceOrder = () => {
 };
 
   useEffect(() => {
-    dispatch({ type: foodsActionTyps.FETCHING });
+    dispatch({ type: foodsActionTypes.FETCHING });
     fetchFoods(match.params.restaurantsId)
       .then((data) => {
         dispatch({
-          type: foodsActionTyps.FETCH_SUCCESS,
+          type: foodsActionTypes.FETCH_SUCCESS,
           payload: {
             foods: data.foods
           }
@@ -184,8 +184,8 @@ const replaceOrder = () => {
       <NewOrderConfirmDialog
         isOpen={state.isOpenNewOrderDialog}
         onClose={() => setState({ ...state, isOpenNewOrderDialog: false })}
-        existingResutaurautName={state.existingResutaurautName}
-        newResutaurautName={state.newResutaurautName}
+        existingRestaurantName={state.existingRestaurantName}
+        newRestaurantName={state.newRestaurantName}
         onClickSubmit={() => replaceOrder()}
         />
       }

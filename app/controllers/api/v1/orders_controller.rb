@@ -6,6 +6,7 @@ module Api
         order = Order.new(
           total_price: total_price(posted_line_foods),
         )
+
         if order.save_with_update_line_foods!(posted_line_foods)
           render json: {}, status: :no_content
         else
